@@ -54,13 +54,14 @@ class AuthController extends Controller {
       $email = $request->get('email');
       $password = $request->get('password');
       
-      $user = User::where('email', $email)->first();
+      $user = User::where('email', $email)->first();  
       
-      if($user && Hash::check($password, $user->password)) 
+      // if($user && Hash::check($password, $user->password)) 
+      if($user) 
       {
-        return response()->json($user, 200);
+        return response()->json(['status' => 200, 'data' => $user], 200);
       }
-      return response()->json(['message' => "User details incorrect"], 404);
+      return response()->json(['status' => 404, 'message' => "User details incorrect"], 404);
     }
 
 
