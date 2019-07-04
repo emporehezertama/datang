@@ -26,6 +26,9 @@ $router->get('/', function () use ($router) {
 $router->post('login', 'AuthController@verify');
 $router->post('send-attendance', 'AttendanceController@send');
 
+// Device Finger
+$router->post('finger-store', 'AttendanceController@fingerStore');
+
 $router->get('device-list', function(){
 
 	$key = isset($_GET['key']) ? $_GET['key'] : '';

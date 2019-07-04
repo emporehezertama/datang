@@ -17,6 +17,31 @@ class AttendanceController extends Controller
     }
 
     /**
+     * Finger Store
+     * @param  Request $request
+     * @return void
+     */
+    public function fingerStore(Request $request)
+    {
+        $user = \App\User::where('absensi_number', $request->absensi_number)->first();
+
+        if($user)
+        {
+            // inject attendance
+            $item               = new AbsensiItem();
+            $item->user_id      = $user->id;
+            $item->date         = date('Y-m-d');
+            $item->clock_in     = date('H:i:s');
+            $item->absensi_device_id = 10; 
+            $item->save();
+
+            return response()->json(['status' => "success", "name" => $name], 201);
+        }
+
+        return response()->json(['status' => "success", "name" => $name], 201);
+    }
+
+    /**
      * Get Send From Device
      * @param  Request $request
      * @return void
