@@ -47,8 +47,6 @@ class CheckAbsen extends Command
       curl_setopt($ch, CURLOPT_URL, 'http://em-hr.co.id/api/public/finger-store');
       curl_setopt($ch, CURLOPT_HEADER, 0);
       curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-      curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie); // Cookie aware
-      curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie); // Cookie aware
       curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
 
       $content = curl_exec($ch);
