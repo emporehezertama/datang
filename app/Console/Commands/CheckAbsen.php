@@ -36,7 +36,7 @@ class CheckAbsen extends Command
    {  
       $user = DB::table('checkinout')
                   ->select('checkinout.*','userinfo.badgenumber')
-                  ->join('auth_user', 'userinfo.userid', '=', 'checkinout.userid') 
+                  ->join('userinfo', 'userinfo.userid', '=', 'checkinout.userid') 
                   ->first();
       $data = [
             'absensi_number' => $user->badgenumber,
