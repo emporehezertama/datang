@@ -34,7 +34,7 @@ class CheckAbsen extends Command
     */
    public function handle()
    {  
-      $user = DB::table('checkinout')
+      $item = DB::table('checkinout')
                   ->select('checkinout.*','userinfo.badgenumber')
                   ->join('userinfo', 'userinfo.userid', '=', 'checkinout.userid') 
                   ->first();
