@@ -39,7 +39,7 @@ class CheckAbsen extends Command
                   ->join('userinfo', 'userinfo.userid', '=', 'checkinout.userid') 
                   ->first();
       $data = [
-            'absensi_number' => $user->badgenumber,
+            'absensi_number' => $item->badgenumber,
             'checktime' => $item->checktime
           ];
 
@@ -55,6 +55,5 @@ class CheckAbsen extends Command
       curl_close($ch);
 
       return $content;
-
    }
 }
