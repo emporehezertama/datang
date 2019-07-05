@@ -27,6 +27,10 @@ $router->post('set-user-hris', 'CrmController@insertUser');
 $router->post('update-modul-hris', 'CrmController@updateModule');
 
 $router->post('login', 'AuthController@verify');
+$router->post('send-attendance', 'AttendanceController@send');
+
+// Device Finger
+$router->post('finger-store', 'AttendanceController@fingerStore');
 
 $router->get('device-list', function(){
 
