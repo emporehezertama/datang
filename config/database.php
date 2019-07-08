@@ -63,13 +63,13 @@ return [
             
             'charset' => 'utf8',  
             'collation' => 'utf8_unicode_ci',
-            'port'      => '83306',
+            //'port'      => '83306',
             'prefix'    => '',
             'strict'    => false,
             
-            'options'   => array(
-                PDO::ATTR_PERSISTENT => true,
-            ),
+            // 'options'   => array(
+            //     PDO::ATTR_PERSISTENT => true,
+            // ),
             
         ],
 
