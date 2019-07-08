@@ -22,7 +22,6 @@ $router->get('/', function () use ($router) {
     ];
 });
 
-
 $router->post('login', 'AuthController@verify');
 $router->post('send-attendance', 'AttendanceController@send');
 
