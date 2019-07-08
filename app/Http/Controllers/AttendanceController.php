@@ -29,8 +29,8 @@ class AttendanceController extends Controller
             // inject attendance
             $item               = new \App\Models\AbsensiItem();
             $item->user_id      = $user->id;
-            $item->date         = date('Y-m-d');
-            $item->clock_in     = date('H:i:s');
+            $item->date         = date('Y-m-d', strtotime($request->checktime));
+            $item->clock_in     = date('H:i:s', strtotime($request->checktime));
             $item->absensi_device_id = 10; 
             $item->save();
 
