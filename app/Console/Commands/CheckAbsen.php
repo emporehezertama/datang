@@ -34,24 +34,42 @@ class CheckAbsen extends Command
     */
    public function handle()
    {  
-      $item = DB::table('checkinout')
-                  ->select('checkinout.*','userinfo.badgenumber')
+      $data = DB::table('checkinout')
+                  ->select('checkinout.*','userinfo.badgenumber', 'temp_data.id as temp_data_id')
                   ->join('userinfo', 'userinfo.userid', '=', 'checkinout.userid') 
-                  ->first();
-      $data = [
-            'absensi_number' => $item->badgenumber,
-            'checktime' => $item->checktime
-          ];
+                  ->join('temp_data', 'temp_data.checkinout_id','=', 'checkinout.id')
+                  ->where('temp_data.status', 0)
+                  ->get();
 
-      $ch = curl_init();
-      curl_setopt($ch, CURLOPT_URL, 'http://em-hr.co.id/api/public/finger-store');
-      curl_setopt($ch, CURLOPT_HEADER, 0);
-      curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-      curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+      foreach($data as $item)
+      {
+        $data = [
+              'absensi_number' => $item->badgenumber,
+              'checktime' => $item->checktime,
+              'sn' => $item->SN,
+              'checktype' => $item->checktype
+            ];
 
-      $content = curl_exec($ch);
-      curl_close($ch);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'http://api.em-hr.co.id/finger-store');
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
 
-      return $content;
+        $content = curl_exec($ch);
+        curl_close($ch);
+
+        echo "\n";
+        echo " Insert Absensi Number ". $item->badgenumber ." \n";
+        echo $content ."\n";
+        echo "\n";
+        echo "\n";
+
+        // update status
+        DB::table('temp_data')
+            ->where('id', $item->temp_data_id)
+            ->update(['status' => 1]);
+      }
    }
 }
