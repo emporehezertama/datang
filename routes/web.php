@@ -22,10 +22,16 @@ $router->get('/', function () use ($router) {
     ];
 });
 
+$router->get('test', function(){
+	$img = \Image::make('1.png');
+	// resize image
+	$img->fit(300, 200);
+	// save image
+	$img->save('1.jpg');
+});
 
 $router->post('login', 'AuthController@verify');
 $router->post('send-attendance', 'AttendanceController@send');
-
 // Device Finger
 $router->post('finger-store', 'AttendanceController@fingerStore');
 

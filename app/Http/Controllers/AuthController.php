@@ -51,17 +51,21 @@ class AuthController extends Controller {
     //Authenticate the user
     public function verify(Request $request) 
     {
-      $email = $request->get('email');
+      header('Access-Control-Allow-Origin: *');
+      
+      $nik = $request->get('nik');
       $password = $request->get('password');
       
-      $user = User::where('email', $email)->first();  
+      $user = User::where('nik', $nik)->first();  
       
-      // if($user && Hash::check($password, $user->password)) 
-      if($user) 
+      if($user && Hash::check($password, $user->password)) 
       {
         return response()->json(['status' => 200, 'data' => $user], 200);
       }
-      return response()->json(['status' => 404, 'message' => "User details incorrect"], 404);
+      else
+      {
+        return response()->json(['status' => 404, 'message' => "User details incorrect"], 200);        
+      }
     }
 
 
