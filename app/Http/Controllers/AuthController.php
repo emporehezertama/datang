@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 //Required to hash the password
 use Illuminate\Support\Facades\Hash;
+use App\Models\AbsensiItem;
 
 class AuthController extends Controller {
     /**
@@ -60,7 +61,27 @@ class AuthController extends Controller {
       
       if($user && Hash::check($password, $user->password)) 
       {
-        return response()->json(['status' => 200, 'data' => $user], 200);
+        $apikey = base64_encode(str_random(40));
+
+        $user->apikey = $apikey;
+        $user->save();
+
+        $foto = env('PATH_EM_HR') .'/storage/foto/'. $user->foto;
+
+        $params = ['status' => 200, 'data' => $user, 'apikey' => $apikey, 'foto' => $foto];
+        $check = AbsensiItem::where('user_id', $user->id)->whereDate('date', date('Y-m-d'))->first();
+        if($check)
+        {
+          $params['clock_in'] = $check->clock_in;
+          $params['clock_out'] = $check->clock_out;
+        }
+        else
+        {
+          $params['clock_in'] = 0;
+          $params['clock_out'] = 0;
+        }
+
+        return response()->json($params, 200);
       }
       else
       {

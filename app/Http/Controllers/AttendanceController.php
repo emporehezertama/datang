@@ -26,12 +26,26 @@ class AttendanceController extends Controller
         
         if($user)
         {
-            // inject attendance
-            $item               = new AbsensiItem();
-            $item->user_id      = $user->id;
-            $item->date         = date('Y-m-d', strtotime($request->checktime));
-            $item->clock_in     = date('H:i:s', strtotime($request->checktime));
-            $item->absensi_device_id = 10; 
+            $item               = AbsensiItem::where('user_id', $user->id)->whereDate('date', date('Y-m-d', strtotime($request->checktime)))->first();
+
+            if(!$item)
+            {
+                $item = new AbsensiItem();                
+                // inject attendance
+                $item->user_id      = $user->id;
+                $item->date         = date('Y-m-d', strtotime($request->checktime));
+                $item->absensi_device_id = 11; 
+            }
+            
+            if($request->checktype == 1)
+            {
+                if($item->clock_out =="") $item->clock_out = date('H:i:s', strtotime($request->checktime));
+            }
+            else
+            {
+                if($item->clock_in == "") $item->clock_in = date('H:i:s', strtotime($request->checktime));
+            }
+
             $item->save();
 
             return response()->json(['status' => "success"], 201);
@@ -49,7 +63,11 @@ class AttendanceController extends Controller
 
         if($user)
         {
-            $imageName = date('H-i-s').'.'.'jpg';   
+            if($request->type == 1)
+                $imageName = 'in.jpg';   
+            else
+                $imageName = 'out.jpg';   
+
             $image_parts = explode(";base64,", $request->file);
             $image_type_aux = explode("image/", $image_parts[0]);
             $image_type = $image_type_aux[1];
@@ -68,9 +86,9 @@ class AttendanceController extends Controller
             // resize image
             $img = \Image::make($path.'/'. $imageName);
 
-            if($img->width() > 500 || $img->height() > 500) 
+            if($img->width() > 300 || $img->height() > 300) 
             {
-                $img->resize( ($img->width() / 2 ), ($img->height() / 2) );
+                $img->resize( (($img->width() /2) / 2), (($img->height() /2) / 2)   );
             }
 
             // save image
