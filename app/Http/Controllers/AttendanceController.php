@@ -35,6 +35,7 @@ class AttendanceController extends Controller
                 $item->user_id      = $user->id;
                 $item->date         = date('Y-m-d', strtotime($request->checktime));
                 $item->absensi_device_id = 11; 
+                $item->timetable    = date('l', strtotime($request->checktime));   
             }
             
             if($request->checktype == 1)
