@@ -63,15 +63,37 @@ return [
             
             'charset' => 'utf8',  
             'collation' => 'utf8_unicode_ci',
-            'port'      => '83306',
+            //'port'      => '83306',
             'prefix'    => '',
             'strict'    => false,
             
-            'options'   => array(
-                PDO::ATTR_PERSISTENT => true,
-            ),
+            //'options'   => array(
+            //    PDO::ATTR_PERSISTENT => true,
+            //),
             
         ],
+
+        'mysqlCrm' => [
+            'driver'    => 'mysql',
+            'host'      => env('DB_HOST_CRM', 'localhost'),
+            'database'  => env('DB_DATABASE_CRM', 'crm'),
+            'username'  => env('DB_USERNAME_CRM', 'root'),
+            'password'  => env('DB_PASSWORD_CRM', ''),
+            //'charset'   => 'utf8',
+            //'collation' => 'utf8_unicode_ci',
+            
+            'charset' => 'utf8',  
+            'collation' => 'utf8_unicode_ci',
+            //'port'      => '83306',
+            'prefix'    => '',
+            'strict'    => false,
+            
+            //'options'   => array(
+            //    PDO::ATTR_PERSISTENT => true,
+            //),
+            
+        ],
+
 
         'pgsql' => [
             'driver'   => 'pgsql',

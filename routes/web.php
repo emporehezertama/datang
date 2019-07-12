@@ -26,6 +26,8 @@ $router->post('set-modul-hris', 'CrmController@insertModule');
 $router->post('set-user-hris', 'CrmController@insertUser');
 $router->post('update-modul-hris', 'CrmController@updateModule');
 
+$router->post('get-modul-crm', 'HrisController@getModule');
+
 $router->post('login', 'AuthController@verify');
 $router->post('send-attendance', 'AttendanceController@send');
 
