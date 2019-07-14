@@ -25,3 +25,4 @@ $router->get('/', function () use ($router) {
 $router->post('login', 'AuthController@verify');
 $router->post('send-attendance', 'AttendanceController@send');
 $router->post('finger-store', 'AttendanceController@fingerStore');
+$router->post('attendance-check-auth', 'AttendanceController@attendanceCheckAuth');

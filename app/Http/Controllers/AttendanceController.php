@@ -20,6 +20,34 @@ class AttendanceController extends Controller
      * Finger Store
      * @return void
      */
+    public function attendanceCheckAuth(Request $request)
+    {
+        $user = \App\User::where('nik', $request->nik)->where('apikey', $request->apikey)->first();
+
+        if($user)
+        {
+            $attendance = AbsensiItem::where('user_id', $user->id)->whereDate('date', $request->date)->first();
+            if($attendance)
+            {
+                if($attendance->clock_in != "" and $attendance->clock_out == "")
+                {
+                    return response()->json(['status' => 2], 201);
+                }
+
+                if($attendance->clock_in != "" and $attendance->clock_out != "")
+                {
+                    return response()->json(['status' => 3], 201);
+                }
+            }
+
+            return response()->json(['status' => 1], 201);
+        }
+    }
+
+    /**
+     * Finger Store
+     * @return void
+     */
     public function fingerStore(Request $request)
     {
         $user = \App\User::where('absensi_number', $request->absensi_number)->first();
@@ -87,10 +115,10 @@ class AttendanceController extends Controller
             // resize image
             $img = \Image::make($path.'/'. $imageName);
 
-            if($img->width() > 300 || $img->height() > 300) 
-            {
-                $img->resize( (($img->width() /2) / 2), (($img->height() /2) / 2)   );
-            }
+            //if($img->width() > 300 || $img->height() > 300) 
+            //{
+                $img->resize( (($img->width() /2) / 2), (($img->height() /2) / 2));
+            //}
 
             // save image
             $img->save($path.'/'. $imageName);
