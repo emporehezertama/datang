@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CrmModule;
-use App\Models\Users;
+use App\Models\UsersMhr;
 use Illuminate\Http\Request;
 
 class CrmController extends Controller
@@ -36,7 +36,8 @@ class CrmController extends Controller
 
     public function insertUser(Request $request) 
     {
-        $data                   = new Users();
+        $data                   = new UsersMhr();
+
         $data->nik              = $request->get('user_name');
         $data->password         = $request->get('password');
         $data->access_id        = 3; //login superadmin untuk client area
