@@ -32,3 +32,4 @@ $router->post('login', 'AuthController@verify');
 $router->post('send-attendance', 'AttendanceController@send');
 $router->post('finger-store', 'AttendanceController@fingerStore');
 $router->post('attendance-check-auth', 'AttendanceController@attendanceCheckAuth');
+$router->post('login-attendance', 'AuthController@verifyAttendance');

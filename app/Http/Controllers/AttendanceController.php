@@ -115,10 +115,7 @@ class AttendanceController extends Controller
             // resize image
             $img = \Image::make($path.'/'. $imageName);
 
-            //if($img->width() > 300 || $img->height() > 300) 
-            //{
-                $img->resize( (($img->width() /2) / 2), (($img->height() /2) / 2));
-            //}
+            $img->resize( ceil( ($img->width() / 2 ) / 2), ceil(($img->height() /2) / 2));
 
             // save image
             $img->save($path.'/'. $imageName);

@@ -1,11 +1,12 @@
 <?php
 namespace App\Http\Controllers;
 use App\User;
+use App\UserMhr;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 //Required to hash the password
 use Illuminate\Support\Facades\Hash;
-use App\Models\AbsensiItem;
+use App\Models\AbsensiItemMobile;
 
 class AuthController extends Controller {
     /**
@@ -89,6 +90,48 @@ class AuthController extends Controller {
       }
     }
 
+    /**
+     * verifyAttendance
+     * @param  Request $request
+     */
+    public function verifyAttendance(Request $request)
+    {
+      header('Access-Control-Allow-Origin: *');
+      
+      $nik = $request->get('nik');
+      $password = $request->get('password');
+      
+      $user = UserMhr::where('nik', $nik)->first();  
+      
+      if($user && Hash::check($password, $user->password)) 
+      {
+        $apikey = base64_encode(str_random(40));
+
+        $user->apikey = $apikey;
+        $user->save();
+
+        $foto = env('PATH_EM_HR') .'/storage/foto/'. $user->foto;
+
+        $params = ['status' => 200, 'data' => $user, 'apikey' => $apikey, 'foto' => $foto];
+        $check = AbsensiItemMobile::where('user_id', $user->id)->whereDate('date', date('Y-m-d'))->first();
+        if($check)
+        {
+          $params['clock_in'] = $check->clock_in;
+          $params['clock_out'] = $check->clock_out;
+        }
+        else
+        {
+          $params['clock_in'] = 0;
+          $params['clock_out'] = 0;
+        }
+
+        return response()->json($params, 200);
+      }
+      else
+      {
+        return response()->json(['status' => 404, 'message' => "User details incorrect"], 200);        
+      }
+    }
 
     //Return the user
     public function show($id) {
