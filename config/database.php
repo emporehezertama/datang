@@ -67,9 +67,11 @@ return [
             'prefix'    => '',
             'strict'    => false,
             
+
             //'options'   => array(
             //    PDO::ATTR_PERSISTENT => true,
             //),
+
             
         ],
 

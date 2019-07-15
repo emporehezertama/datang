@@ -25,8 +25,14 @@ $app = new Laravel\Lumen\Application(
 // Load configuration files
 $app->configure('database');
 
-$app->withFacades();
+$app->withFacades(TRUE,
+	[
+		Intervention\Image\Facades\Image::class => 'Image'
+	]
+);
 
+$app->register(Intervention\Image\ImageServiceProvider::class);
+$app->alias('Images',Intervention\Image\Facades\Image::class );
 $app->withEloquent();
 
 /*
@@ -80,7 +86,6 @@ $app->singleton(
 |
 */
 
-// $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 

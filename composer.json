@@ -6,6 +6,7 @@
     "type": "project",
     "require": {
         "php": ">=7.1.3",
+        "intervention/image": "^2.5",
         "laravel/lumen-framework": "5.8.*",
         "monolog/monolog": "^1.24",
         "sunra/php-simple-html-dom-parser": "^1.5",
