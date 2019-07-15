@@ -94,7 +94,7 @@ class AuthController extends Controller {
      * verifyAttendance
      * @param  Request $request
      */
-    public function verifyAttendance(Request $request)
+    public function verifyAttendance()
     {
       header('Access-Control-Allow-Origin: *');
       
