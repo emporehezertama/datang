@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\AbsensiItem;
+use App\Models\UsersMhr;
+use App\Models\AbsensiItemMobile;
+use App\Models\UsersDemoEmp;
 
 class AttendanceController extends Controller
 {
@@ -22,11 +25,11 @@ class AttendanceController extends Controller
      */
     public function attendanceCheckAuth(Request $request)
     {
-        $user = \App\User::where('nik', $request->nik)->where('apikey', $request->apikey)->first();
+        $user = UsersDemoEmp::where('nik', $request->nik)->where('apikey', $request->apikey)->first();
 
         if($user)
         {
-            $attendance = AbsensiItem::where('user_id', $user->id)->whereDate('date', $request->date)->first();
+            $attendance = AbsensiItemMobile::where('user_id', $user->id)->whereDate('date', $request->date)->first();
             if($attendance)
             {
                 if($attendance->clock_in != "" and $attendance->clock_out == "")
@@ -88,8 +91,9 @@ class AttendanceController extends Controller
      */
     public function send(Request $request)
     {
-        $user = \App\User::where('nik', $request->nik)->first();
+        header('Access-Control-Allow-Origin: *');
 
+        $user = UsersDemoEmp::where('nik', $request->nik)->first();
         if($user)
         {
             if($request->type == 1)
@@ -121,10 +125,10 @@ class AttendanceController extends Controller
             $img->save($path.'/'. $imageName);
             
             // inject attendance
-            $item               = AbsensiItem::whereDate('date', '=',$request->date)->where('user_id', $user->id)->first();
+            $item               = AbsensiItemMobile::whereDate('date', '=',$request->date)->where('user_id', $user->id)->first();
             if(!$item)
             {
-                $item               = new AbsensiItem();   
+                $item               = new AbsensiItemMobile();   
                 $item->user_id      = $user->id;
                 $item->date         = $request->date;
                 $item->timetable    = date('l', strtotime($request->date));   
