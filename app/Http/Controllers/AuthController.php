@@ -98,9 +98,9 @@ class AuthController extends Controller {
     {
       header('Access-Control-Allow-Origin: *');
       
-      $nik = $request->get('nik');
-      $password = $request->get('password');
-      
+      $nik        = $_GET['nik'];
+      $password   = $_GET['password'];
+      return $nik;
       $user = UserMhr::where('nik', $nik)->first();  
       
       if($user && Hash::check($password, $user->password)) 
