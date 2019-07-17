@@ -1,12 +1,13 @@
 <?php
 namespace App\Http\Controllers;
 use App\User;
-use App\UserMhr;
+use App\Models\UsersMhr;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 //Required to hash the password
 use Illuminate\Support\Facades\Hash;
 use App\Models\AbsensiItemMobile;
+use App\Models\UsersDemoEmp;
 
 class AuthController extends Controller {
     /**
@@ -67,7 +68,11 @@ class AuthController extends Controller {
         $user->apikey = $apikey;
         $user->save();
 
-        $foto = env('PATH_EM_HR') .'/storage/foto/'. $user->foto;
+        if(!empty($user->foto))
+        {
+          $foto = env('PATH_EM_HR') .'/storage/foto/'. $user->foto;          
+        } else 
+          $foto = '';
 
         $params = ['status' => 200, 'data' => $user, 'apikey' => $apikey, 'foto' => $foto];
         $check = AbsensiItem::where('user_id', $user->id)->whereDate('date', date('Y-m-d'))->first();
@@ -94,23 +99,27 @@ class AuthController extends Controller {
      * verifyAttendance
      * @param  Request $request
      */
-    public function verifyAttendance()
+    public function verifyAttendance(Request $request)
     {
       header('Access-Control-Allow-Origin: *');
       
       $nik = $request->get('nik');
       $password = $request->get('password');
       
-      $user = UserMhr::where('nik', $nik)->first();  
-      
+      $user = UsersDemoEmp::where('nik', $nik)->first();  
+     
       if($user && Hash::check($password, $user->password)) 
       {
         $apikey = base64_encode(str_random(40));
-
+        
         $user->apikey = $apikey;
         $user->save();
 
-        $foto = env('PATH_EM_HR') .'/storage/foto/'. $user->foto;
+        if(!empty($user->foto))
+        {
+          $foto = env('PATH_EM_HR') .'/storage/foto/'. $user->foto;          
+        } else $foto = '';
+
 
         $params = ['status' => 200, 'data' => $user, 'apikey' => $apikey, 'foto' => $foto];
         $check = AbsensiItemMobile::where('user_id', $user->id)->whereDate('date', date('Y-m-d'))->first();

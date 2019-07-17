@@ -117,6 +117,17 @@ return [
             
         ],
 
+        'mysqlDemoEmp' => [
+            'driver'    => 'mysql',
+            'host'      => env('DB_HOST_DEMOEMP', 'localhost'),
+            'database'  => env('DB_DATABASE_DEMOEMP', 'hris'),
+            'username'  => env('DB_USERNAME_DEMOEMP', 'root'),
+            'password'  => env('DB_PASSWORD_DEMOEMP', ''),
+            'charset' => 'utf8',  
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
+            'strict'    => false,
+        ],
 
         'pgsql' => [
             'driver'   => 'pgsql',
