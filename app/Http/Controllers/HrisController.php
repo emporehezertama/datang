@@ -36,27 +36,33 @@ class HrisController extends Controller
     public function updateModuleCrm(Request $request)
     {
         //ke database crm ke tabel project_product
-        if($request->get('project_id') != null) {
+        if($request->get('crm_product_id') != null) {
 
-            CrmProjectProduct::where('crm_product_id',$request->get('crm_product_id'))->where('crm_project_id',$request->get('project_id'))->delete();
+            $arrayProduct = explode(',',$request->get('crm_product_id'));
+            $dataProduct = array_map('intval',$arrayProduct);
 
-                $product = CrmProjectProduct::where('crm_product_id',$request->get('crm_product_id'))->where('crm_project_id',$request->get('project_id'))->first();
+            CrmProjectProduct::whereNotIn('crm_product_id',$dataProduct)->where('crm_project_id',$request->get('crm_project_id'))->delete();
 
-                if(!$product)
-                {
-                    $product = new CrmProjectProduct();
-                    $product->crm_project_id  = $request->get('project_id');
-                    $product->crm_product_id  = $request->get('crm_product_id');
-                    if($request->get('limit_user') != null){
+                
+                foreach ($dataProduct as $key => $value) {
+                    # code...
+                    $product = CrmProjectProduct::where('crm_product_id',$value)->where('crm_project_id',$request->get('crm_project_id'))->first();
+                    if(!$product)
+                    {
+                        $product = new CrmProjectProduct();
+                        $product->crm_project_id  = $request->get('crm_project_id');
+                        $product->crm_product_id  = $value;
+                    }
+                    if($value == 3){
                         $product->limit_user      = $request->get('limit_user');
                     }
-                    $product->save();
+                        $product->save();
                 }
-
         } else{
-            CrmProjectProduct::where('crm_project_id',$request->get('project_id'))->delete();
+            CrmProjectProduct::where('crm_project_id',$request->get('crm_project_id'))->delete();
         }
         return response()->json(['status' => "success"], 201);
+
     }
     
 }
