@@ -232,7 +232,7 @@ class AttendanceController extends Controller
                 $imageName = 'in.jpg';   
             else
                 $imageName = 'out.jpg';   
-            /*
+            
             $image_parts = explode(";base64,", $request->file);
             $image_type_aux = explode("image/", @$image_parts[0]);
             $image_type = @$image_type_aux[1];
@@ -255,7 +255,7 @@ class AttendanceController extends Controller
 
             // save image
             $img->save($path.'/'. $imageName);
-            */
+            
             // inject attendance
             $item               = AbsensiItemMobile::whereDate('date', '=',$request->date)->where('user_id', $user->id)->first();
             if(!$item)
