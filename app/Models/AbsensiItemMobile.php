@@ -9,4 +9,9 @@ class AbsensiItemMobile extends Model
     protected $connection = 'mysqlDemoEmp';
 	
     protected $table = 'absensi_item';
+
+    public function user()
+    {
+    	return $this->hasOne('\App\User', 'id', 'user_id');
+    }
 }

@@ -34,3 +34,12 @@ $router->post('send-attendance', 'AttendanceController@send');
 $router->post('finger-store', 'AttendanceController@fingerStore');
 $router->post('attendance-check-auth', 'AttendanceController@attendanceCheckAuth');
 $router->post('login-attendance', 'AuthController@verifyAttendance');
+
+$router->get('test',  function(){
+	$awal  = strtotime('2019-02-26 10:05:25');
+	$akhir = strtotime('2019-02-26 11:07:33');
+	$diff  = $akhir - $awal;
+	$jam   = floor($diff / (60 * 60));
+	$menit = $diff - $jam * (60 * 60);
+	echo 'Waktu Tersisa tinggal: ' . $jam .  ' jam, ' . floor( $menit / 60 ) . ' menit';
+});

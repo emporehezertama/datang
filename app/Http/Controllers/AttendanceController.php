@@ -71,11 +71,55 @@ class AttendanceController extends Controller
             
             if($request->checktype == 1)
             {
-                if($item->clock_out =="") $item->clock_out = date('H:i:s', strtotime($request->checktime));
+                if($item->clock_out =="") 
+                {
+                    $item->clock_out = date('H:i:s', strtotime($request->checktime));
+
+                    if(isset($user->absensiSetting->clock_out))
+                    {
+                        $akhir  = strtotime($item->date .' '. $user->absensiSetting->clock_out .':00');
+                        $awal = strtotime($item->date .' '. $request->checktime);
+                        $diff  = $akhir - $awal;
+                        $jam   = floor($diff / (60 * 60));
+                        $menit = ($diff - $jam * (60 * 60)) / 60;
+                        
+                        if($jam > 0 || $menit > 0)
+                        {
+                            $jam = abs($jam);
+                            $menit = abs($menit);
+                            $jam = $jam <= 9 ? "0".$jam : $jam;
+                            $menit = $menit <= 9 ? "0".$menit : $menit;
+
+                            $item->early = $jam .':'. $menit; 
+                        }
+                    }
+                }
             }
             else
             {
-                if($item->clock_in == "") $item->clock_in = date('H:i:s', strtotime($request->checktime));
+                if($item->clock_in == "") 
+                {
+                    $item->clock_in = date('H:i:s', strtotime($request->checktime));
+
+                    if(isset($user->absensiSetting->clock_in))
+                    {
+                        $awal  = strtotime($item->date .' '. $user->absensiSetting->clock_in .':00');
+                        $akhir = strtotime($item->date .' '. $request->checktime);
+                        $diff  = $akhir - $awal;
+                        $jam   = floor($diff / (60 * 60));
+                        $menit = ($diff - $jam * (60 * 60)) / 60;
+                        
+                        if($jam > 0 || $menit > 0)
+                        {
+                            $jam = abs($jam);
+                            $menit = abs($menit);
+                            $jam = $jam <= 9 ? "0".$jam : $jam;
+                            $menit = $menit <= 9 ? "0".$menit : $menit;
+
+                            $item->late = $jam .':'. $menit; 
+                        }
+                    }
+                }
             }
 
             $item->save();
@@ -100,7 +144,7 @@ class AttendanceController extends Controller
                 $imageName = 'in.jpg';   
             else
                 $imageName = 'out.jpg';   
-
+            
             $image_parts = explode(";base64,", $request->file);
             $image_type_aux = explode("image/", @$image_parts[0]);
             $image_type = @$image_type_aux[1];
@@ -144,6 +188,25 @@ class AttendanceController extends Controller
                     $item->long         = $request->long;
                     $item->lat          = $request->lat;
                 }
+                
+                if(isset($user->absensiSetting->clock_in))
+                {
+                    $awal  = strtotime($item->date .' '. $user->absensiSetting->clock_in .':00');
+                    $akhir = strtotime($item->date .' '. $request->time .':00');
+                    $diff  = $akhir - $awal;
+                    $jam   = floor($diff / (60 * 60));
+                    $menit = ($diff - $jam * (60 * 60)) / 60;
+                    
+                    if($jam > 0 || $menit > 0)
+                    {
+                        $jam = abs($jam);
+                        $menit = abs($menit);
+                        $jam = $jam <= 9 ? "0".$jam : $jam;
+                        $menit = $menit <= 9 ? "0".$menit : $menit;
+
+                        $item->late = $jam .':'. $menit; 
+                    }
+                }
             }
             else
             {
@@ -153,6 +216,35 @@ class AttendanceController extends Controller
                     $item->pic_out          = '/'.$user->id.'/'.date('Y-m-d').'/'.$imageName;
                     $item->lat_out          = $request->lat;
                     $item->long_out         = $request->long;
+
+                    $awal  = strtotime($item->date .' '. $item->clock_in .':00');
+                    $akhir = strtotime($item->date .' '. $item->clock_out .':00');
+                    $diff  = $akhir - $awal;
+                    $jam   = floor($diff / (60 * 60));
+                    $menit = ($diff - $jam * (60 * 60) ) / 60;
+
+                    $jam = $jam <= 9 ? "0".$jam : $jam;
+
+                    $item->work_time        = $jam .':'. $menit;  
+                }
+
+                if(isset($user->absensiSetting->clock_out))
+                {
+                    $akhir  = strtotime($item->date .' '. $user->absensiSetting->clock_out .':00');
+                    $awal = strtotime($item->date .' '. $request->time .':00');
+                    $diff  = $akhir - $awal;
+                    $jam   = floor($diff / (60 * 60));
+                    $menit = ($diff - $jam * (60 * 60)) / 60;
+                    
+                    if($jam > 0 || $menit > 0)
+                    {
+                        $jam = abs($jam);
+                        $menit = abs($menit);
+                        $jam = $jam <= 9 ? "0".$jam : $jam;
+                        $menit = $menit <= 9 ? "0".$menit : $menit;
+
+                        $item->early = $jam .':'. $menit; 
+                    }
                 }
             }
 
