@@ -29,4 +29,13 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $hidden = [
         'password',
     ];
+
+    /**
+     * Absensi Setting
+     * @return void
+     */
+    public function absensiSetting()
+    {
+        return $this->hasOne('App\Models\AbsensiSetting', 'id', 'absensi_setting_id');
+    }
 }

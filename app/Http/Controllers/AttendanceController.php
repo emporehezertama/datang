@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Models\AbsensiItem;
 use App\Models\UsersMhr;
 use App\Models\AbsensiItemMobile;
+use App\Models\AbsensiItemDemo;
 use App\Models\UsersDemoEmp;
 
 class AttendanceController extends Controller
@@ -53,6 +54,9 @@ class AttendanceController extends Controller
      */
     public function fingerStore(Request $request)
     {
+        /**
+         * Insert to em-apps.com
+         */
         $user = \App\User::where('absensi_number', $request->absensi_number)->first();
         
         if($user)
@@ -123,9 +127,91 @@ class AttendanceController extends Controller
             }
 
             $item->save();
-
-            return response()->json(['status' => "success"], 201);
         }
+        /**
+         * END
+         */
+        
+        
+        /**
+         * Insert to demo.em-apps.com
+         */
+        $user = UsersDemoEmp::where('absensi_number', $request->absensi_number)->first();
+        
+        if($user)
+        {
+            $item               = AbsensiItemDemo::where('user_id', $user->id)->whereDate('date', date('Y-m-d', strtotime($request->checktime)))->first();
+
+            if(!$item)
+            {
+                $item = new AbsensiItemDemo();                
+                // inject attendance
+                $item->user_id      = $user->id;
+                $item->date         = date('Y-m-d', strtotime($request->checktime));
+                $item->absensi_device_id = 11; 
+                $item->timetable    = date('l', strtotime($request->checktime));   
+            }
+            
+            if($request->checktype == 1)
+            {
+                if($item->clock_out =="") 
+                {
+                    $item->clock_out = date('H:i:s', strtotime($request->checktime));
+
+                    if(isset($user->absensiSetting->clock_out))
+                    {
+                        $akhir  = strtotime($item->date .' '. $user->absensiSetting->clock_out .':00');
+                        $awal = strtotime($item->date .' '. $request->checktime);
+                        $diff  = $akhir - $awal;
+                        $jam   = floor($diff / (60 * 60));
+                        $menit = ($diff - $jam * (60 * 60)) / 60;
+                        
+                        if($jam > 0 || $menit > 0)
+                        {
+                            $jam = abs($jam);
+                            $menit = abs($menit);
+                            $jam = $jam <= 9 ? "0".$jam : $jam;
+                            $menit = $menit <= 9 ? "0".$menit : $menit;
+
+                            $item->early = $jam .':'. $menit; 
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if($item->clock_in == "") 
+                {
+                    $item->clock_in = date('H:i:s', strtotime($request->checktime));
+
+                    if(isset($user->absensiSetting->clock_in))
+                    {
+                        $awal  = strtotime($item->date .' '. $user->absensiSetting->clock_in .':00');
+                        $akhir = strtotime($item->date .' '. $request->checktime);
+                        $diff  = $akhir - $awal;
+                        $jam   = floor($diff / (60 * 60));
+                        $menit = ($diff - $jam * (60 * 60)) / 60;
+                        
+                        if($jam > 0 || $menit > 0)
+                        {
+                            $jam = abs($jam);
+                            $menit = abs($menit);
+                            $jam = $jam <= 9 ? "0".$jam : $jam;
+                            $menit = $menit <= 9 ? "0".$menit : $menit;
+
+                            $item->late = $jam .':'. $menit; 
+                        }
+                    }
+                }
+            }
+
+            $item->save();
+        }
+        /**
+         * END
+         */
+        
+        return response()->json(['status' => "success"], 201);
     }
 
     /**
