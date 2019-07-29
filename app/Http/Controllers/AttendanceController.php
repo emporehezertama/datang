@@ -136,6 +136,7 @@ class AttendanceController extends Controller
         /**
          * Insert to demo.em-apps.com
          */
+        /*
         $user = UsersDemoEmp::where('absensi_number', $request->absensi_number)->first();
         
         if($user)
@@ -207,6 +208,7 @@ class AttendanceController extends Controller
 
             $item->save();
         }
+        */
         /**
          * END
          */
@@ -230,7 +232,7 @@ class AttendanceController extends Controller
                 $imageName = 'in.jpg';   
             else
                 $imageName = 'out.jpg';   
-            
+            /*
             $image_parts = explode(";base64,", $request->file);
             $image_type_aux = explode("image/", @$image_parts[0]);
             $image_type = @$image_type_aux[1];
@@ -253,7 +255,7 @@ class AttendanceController extends Controller
 
             // save image
             $img->save($path.'/'. $imageName);
-            
+            */
             // inject attendance
             $item               = AbsensiItemMobile::whereDate('date', '=',$request->date)->where('user_id', $user->id)->first();
             if(!$item)
@@ -283,15 +285,17 @@ class AttendanceController extends Controller
                     $jam   = floor($diff / (60 * 60));
                     $menit = ($diff - $jam * (60 * 60)) / 60;
                     
-                    if($jam > 0 || $menit > 0)
+                    if($diff > 0)
                     {
                         $jam = abs($jam);
                         $menit = abs($menit);
                         $jam = $jam <= 9 ? "0".$jam : $jam;
                         $menit = $menit <= 9 ? "0".$menit : $menit;
 
-                        $item->late = $jam .':'. $menit; 
+                        $item->late = $jam .':'. $menit;
                     }
+
+                    dd($item->late);
                 }
             }
             else
