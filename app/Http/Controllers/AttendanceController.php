@@ -294,8 +294,6 @@ class AttendanceController extends Controller
 
                         $item->late = $jam .':'. $menit;
                     }
-
-                    dd($item->late);
                 }
             }
             else
