@@ -165,7 +165,7 @@ class AuthController extends Controller {
 
         if(!empty($user->foto))
         {
-          $foto = env('PATH_EM_HR') .'/storage/foto/'. $user->foto;          
+          $foto = env('PATH_EM_HR_MHR') .'/storage/foto/'. $user->foto;          
         } else $foto = '';
 
 
