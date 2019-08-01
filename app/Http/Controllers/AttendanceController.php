@@ -315,7 +315,7 @@ class AttendanceController extends Controller
             $image_type = @$image_type_aux[1];
             $image_base64 = base64_decode(@$image_parts[1]);
 
-            $path = env('PATH_ATTENDANCE_UPLOAD'). '/'.$user->id.'/'.date('Y-m-d');
+            $path = env('PATH_ATTENDANCE_UPLOAD_MHR'). '/'.$user->id.'/'.date('Y-m-d');
             
             //Check if the directory already exists.
             if(!is_dir($path)){
