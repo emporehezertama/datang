@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 //Required to hash the password
 use Illuminate\Support\Facades\Hash;
 use App\Models\AbsensiItemMobile;
+use App\Models\AbsensiItemMhr;
 use App\Models\UsersDemoEmp;
 
 class AuthController extends Controller {
@@ -123,6 +124,53 @@ class AuthController extends Controller {
 
         $params = ['status' => 200, 'data' => $user, 'apikey' => $apikey, 'foto' => $foto];
         $check = AbsensiItemMobile::where('user_id', $user->id)->whereDate('date', date('Y-m-d'))->first();
+        if($check)
+        {
+          $params['clock_in'] = $check->clock_in;
+          $params['clock_out'] = $check->clock_out;
+        }
+        else
+        {
+          $params['clock_in'] = 0;
+          $params['clock_out'] = 0;
+        }
+
+        return response()->json($params, 200);
+      }
+      else
+      {
+        return response()->json(['status' => 404, 'message' => "User details incorrect"], 200);        
+      }
+    }
+
+    /**
+     * verifyAttendance
+     * @param  Request $request
+     */
+    public function verifyAttendanceMhr(Request $request)
+    {
+      header('Access-Control-Allow-Origin: *');
+
+      $nik = $request->get('nik');
+      $password = $request->get('password');
+      
+      $user = UsersMhr::where('nik', $nik)->first();  
+     
+      if($user && Hash::check($password, $user->password)) 
+      {
+        $apikey = base64_encode(str_random(40));
+        
+        $user->apikey = $apikey;
+        $user->save();
+
+        if(!empty($user->foto))
+        {
+          $foto = env('PATH_EM_HR') .'/storage/foto/'. $user->foto;          
+        } else $foto = '';
+
+
+        $params = ['status' => 200, 'data' => $user, 'apikey' => $apikey, 'foto' => $foto];
+        $check = AbsensiItemMhr::where('user_id', $user->id)->whereDate('date', date('Y-m-d'))->first();
         if($check)
         {
           $params['clock_in'] = $check->clock_in;
