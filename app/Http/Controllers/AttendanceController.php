@@ -116,14 +116,13 @@ class AttendanceController extends Controller
                         $jam   = floor($diff / (60 * 60));
                         $menit = ($diff - $jam * (60 * 60)) / 60;
                         
-                        if($jam > 0 || $menit > 0)
+                        if($diff > 0)
                         {
-                            $jam = abs($jam);
-                            $menit = abs($menit);
-                            $jam = $jam <= 9 ? "0".$jam : $jam;
-                            $menit = $menit <= 9 ? "0".$menit : $menit;
-
-                            $item->early = $jam .':'. $menit; 
+                            $awal  = date_create($item->date .' '. $user->absensiSetting->clock_out .':00');
+                            $akhir = date_create($item->date .' '. $request->time .':00'); // waktu sekarang, pukul 06:13
+                            $diff  = date_diff( $akhir, $awal );
+                            
+                            $item->early = $diff->h .':'. $diff->i; 
                         }
                     }
                 }
@@ -271,14 +270,13 @@ class AttendanceController extends Controller
                     $jam   = floor($diff / (60 * 60));
                     $menit = ($diff - $jam * (60 * 60)) / 60;
                     
-                    if($jam > 0 || $menit > 0)
+                    if($diff > 0)
                     {
-                        $jam = abs($jam);
-                        $menit = abs($menit);
-                        $jam = $jam <= 9 ? "0".$jam : $jam;
-                        $menit = $menit <= 9 ? "0".$menit : $menit;
-
-                        $item->early = $jam .':'. $menit; 
+                        $awal  = date_create($item->date .' '. $user->absensiSetting->clock_out .':00');
+                        $akhir = date_create($item->date .' '. $request->time .':00'); // waktu sekarang, pukul 06:13
+                        $diff  = date_diff( $akhir, $awal );
+                        
+                        $item->early = $diff->h .':'. $diff->i; 
                     }
                 }
             }
@@ -330,10 +328,13 @@ class AttendanceController extends Controller
 
             $img->resize( ceil( ($img->width() / 2 ) / 2), ceil(($img->height() /2) / 2));
 
-            // save image
             $img->save($path.'/'. $imageName);
             
             // inject attendance
+            // replace time server
+            $request->time = date('H:i:s');
+            $request->date = date('Y-m-d');
+
             $item               = AbsensiItemMhr::whereDate('date', '=',$request->date)->where('user_id', $user->id)->first();
             if(!$item)
             {
@@ -385,7 +386,8 @@ class AttendanceController extends Controller
                     $awal  = strtotime($item->date .' '. $item->clock_in .':00');
                     $akhir = strtotime($item->date .' '. $item->clock_out .':00');
                     $diff  = $akhir - $awal;
-                    $jam   = floor($diff / (60 * 60));
+                    //$jam   = floor($diff / (60 * 60));
+                    $jam   = ($diff / (60 * 60));
                     $menit = ($diff - $jam * (60 * 60) ) / 60;
 
                     $jam = $jam <= 9 ? "0".$jam : $jam;
@@ -400,15 +402,14 @@ class AttendanceController extends Controller
                     $diff  = $akhir - $awal;
                     $jam   = floor($diff / (60 * 60));
                     $menit = ($diff - $jam * (60 * 60)) / 60;
-                    
-                    if($jam > 0 || $menit > 0)
-                    {
-                        $jam = abs($jam);
-                        $menit = abs($menit);
-                        $jam = $jam <= 9 ? "0".$jam : $jam;
-                        $menit = $menit <= 9 ? "0".$menit : $menit;
 
-                        $item->early = $jam .':'. $menit; 
+                    if($diff > 0)
+                    {
+                        $awal  = date_create($item->date .' '. $user->absensiSetting->clock_out .':00');
+                        $akhir = date_create($item->date .' '. $request->time .':00'); // waktu sekarang, pukul 06:13
+                        $diff  = date_diff( $akhir, $awal );
+                        
+                        $item->early = $diff->h .':'. $diff->i; 
                     }
                 }
             }
