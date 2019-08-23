@@ -203,6 +203,10 @@ class AttendanceController extends Controller
             $img->save($path.'/'. $imageName);
             
             // inject attendance
+            // replace time server
+            $request->time = date('H:i');
+            $request->date = date('Y-m-d');
+
             $item               = AbsensiItemMobile::whereDate('date', '=',$request->date)->where('user_id', $user->id)->first();
             if(!$item)
             {
