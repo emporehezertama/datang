@@ -332,7 +332,7 @@ class AttendanceController extends Controller
             
             // inject attendance
             // replace time server
-            $request->time = date('H:i:s');
+            $request->time = date('H:i');
             $request->date = date('Y-m-d');
 
             $item               = AbsensiItemMhr::whereDate('date', '=',$request->date)->where('user_id', $user->id)->first();
