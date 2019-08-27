@@ -76,6 +76,20 @@ class AuthController extends Controller {
           $foto = '';
 
         $params = ['status' => 200, 'data' => $user, 'apikey' => $apikey, 'foto' => $foto];
+
+        $params['logo']     = get_setting('attendance_logo');
+        $params['company']  = get_setting('attendance_company');
+        $params['news']     = get_setting('attendance_news');
+
+        if(!empty($item->empore_organisasi_staff_id))
+        {
+          $params['job'] = isset($user->empore_staff->name) ? $user->empore_staff->name : '';
+        }
+        if(empty($user->empore_organisasi_staff_id) and !empty($user->empore_organisasi_manager_id))
+        {
+          $params['job'] .= isset($user->empore_manager->name) ? ' / '. $user->empore_manager->name : '';
+        }
+
         $check = AbsensiItem::where('user_id', $user->id)->whereDate('date', date('Y-m-d'))->first();
         if($check)
         {
@@ -123,6 +137,20 @@ class AuthController extends Controller {
 
 
         $params = ['status' => 200, 'data' => $user, 'apikey' => $apikey, 'foto' => $foto];
+
+        $params['logo']     = get_setting('attendance_logo');
+        $params['company']  = get_setting('attendance_company');
+        $params['news']     = get_setting('attendance_news');
+
+        if(!empty($item->empore_organisasi_staff_id))
+        {
+          $params['job'] = isset($user->empore_staff->name) ? $user->empore_staff->name : '';
+        } 
+        if(empty($user->empore_organisasi_staff_id) and !empty($user->empore_organisasi_manager_id))
+        {
+          $params['job'] .= isset($user->empore_manager->name) ? ' / '. $user->empore_manager->name : '';
+        }
+
         $check = AbsensiItemMobile::where('user_id', $user->id)->whereDate('date', date('Y-m-d'))->first();
         if($check)
         {
@@ -168,8 +196,22 @@ class AuthController extends Controller {
           $foto = env('PATH_EM_HR_MHR') .'/storage/foto/'. $user->foto;          
         } else $foto = '';
 
-
         $params = ['status' => 200, 'data' => $user, 'apikey' => $apikey, 'foto' => $foto];
+
+        $params['logo']     = get_setting('attendance_logo');
+        $params['company']  = get_setting('attendance_company');
+        $params['news']     = get_setting('attendance_news');
+
+        if(!empty($item->empore_organisasi_staff_id))
+        {
+          $params['job'] = isset($user->empore_staff->name) ? $user->empore_staff->name : '';
+        }
+              
+        if(empty($user->empore_organisasi_staff_id) and !empty($user->empore_organisasi_manager_id))
+        {
+          $params['job'] .= isset($user->empore_manager->name) ? ' / '. $user->empore_manager->name : '';
+        }
+
         $check = AbsensiItemMhr::where('user_id', $user->id)->whereDate('date', date('Y-m-d'))->first();
         if($check)
         {
