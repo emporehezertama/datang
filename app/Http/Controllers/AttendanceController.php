@@ -390,11 +390,11 @@ class AttendanceController extends Controller
                     $awal  = strtotime($item->date .' '. $item->clock_in .':00');
                     $akhir = strtotime($item->date .' '. $item->clock_out .':00');
                     $diff  = $akhir - $awal;
-                    //$jam   = floor($diff / (60 * 60));
-                    $jam   = ($diff / (60 * 60));
+                    $jam   = floor($diff / (60 * 60));
                     $menit = ($diff - $jam * (60 * 60) ) / 60;
 
                     $jam = $jam <= 9 ? "0".$jam : $jam;
+                    $menit = $menit <= 9 ? "0".$menit : $menit;
 
                     $item->work_time        = $jam .':'. $menit;  
                 }
@@ -413,7 +413,10 @@ class AttendanceController extends Controller
                         $akhir = date_create($item->date .' '. $request->time .':00'); // waktu sekarang, pukul 06:13
                         $diff  = date_diff( $akhir, $awal );
                         
-                        $item->early = $diff->h .':'. $diff->i; 
+                        $i = $diff->i <= 9 ? "0".$diff->i : $diff->i;
+                        $h = $diff->h <=9 ? "0". $diff->h : $diff->h;
+
+                        $item->early = $h .':'. $i; 
                     }
                 }
             }
