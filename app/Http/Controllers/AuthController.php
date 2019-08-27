@@ -77,14 +77,14 @@ class AuthController extends Controller {
 
         $params = ['status' => 200, 'data' => $user, 'apikey' => $apikey, 'foto' => $foto];
 
-        if(!empty(get_setting('attendance_logo')))
+        if(!empty(get_setting('attendance_logo', $user)))
         {
-          $params['logo']     = env('PATH_EM_HR').get_setting('attendance_logo');
+          $params['logo']     = env('PATH_EM_HR').get_setting('attendance_logo', $user);
         }
         else $params['logo'] = '';
         
-        $params['company']  = get_setting('attendance_company');
-        $params['news']     = get_setting('attendance_news');
+        $params['company']  = get_setting('attendance_company', $user);
+        $params['news']     = get_setting('attendance_news', $user);
 
         if(!empty($item->empore_organisasi_staff_id))
         {
@@ -143,14 +143,14 @@ class AuthController extends Controller {
 
         $params = ['status' => 200, 'data' => $user, 'apikey' => $apikey, 'foto' => $foto];
 
-        if(!empty(get_setting('attendance_logo')))
+        if(!empty(get_setting('attendance_logo', $user)))
         {
-          $params['logo']     = env('PATH_EM_HR').get_setting('attendance_logo');
+          $params['logo']     = env('PATH_EM_HR').get_setting('attendance_logo', $user);
         }
         else $params['logo'] = '';
 
-        $params['company']  = get_setting('attendance_company');
-        $params['news']     = get_setting('attendance_news');
+        $params['company']  = get_setting('attendance_company', $user);
+        $params['news']     = get_setting('attendance_news', $user);
 
         if(!empty($item->empore_organisasi_staff_id))
         {
@@ -208,14 +208,14 @@ class AuthController extends Controller {
 
         $params = ['status' => 200, 'data' => $user, 'apikey' => $apikey, 'foto' => $foto];
 
-        if(!empty(get_setting('attendance_logo')))
+        if(!empty(get_setting('attendance_logo', $user)))
         {
-          $params['logo']     = env('PATH_EM_HR').get_setting('attendance_logo');
+          $params['logo']     = env('PATH_EM_HR').get_setting('attendance_logo', $user);
         }
         else $params['logo'] = '';
-        
-        $params['company']  = get_setting('attendance_company');
-        $params['news']     = get_setting('attendance_news');
+
+        $params['company']  = get_setting('attendance_company', $user);
+        $params['news']     = get_setting('attendance_news', $user);
 
         if(!empty($item->empore_organisasi_staff_id))
         {

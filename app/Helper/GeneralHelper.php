@@ -4,7 +4,7 @@
  * @param  $key
  * @return string
  */
-function get_setting($key)
+function get_setting($key, $auth=null)
 {
 	$setting = \App\Models\Setting::where('key', $key)->first();
 	if($key == 'layout_karyawan'){
@@ -13,7 +13,7 @@ function get_setting($key)
 			return $setting->value;
 		}
 	}
-	$auth = \Auth::user();
+
 	if($auth)
 	{
 		if($auth->project_id != NULL)
