@@ -25,10 +25,6 @@ date_default_timezone_set('Asia/Jakarta');
      ];
  });
 
-
-// $router->get('/', 'AttendanceController@test');
-
-
 $router->post('set-modul-hris', 'CrmController@insertModule');
 $router->post('set-user-hris', 'CrmController@insertUser');
 $router->post('update-modul-hris', 'CrmController@updateModule');
