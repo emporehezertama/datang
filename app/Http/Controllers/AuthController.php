@@ -86,7 +86,7 @@ class AuthController extends Controller {
         $params['company']  = get_setting('attendance_company', $user);
         $params['news']     = get_setting('attendance_news', $user);
         $params['job']      = '';
-        
+
         if(!empty($item->empore_organisasi_staff_id))
         {
           $params['job'] = isset($user->empore_staff->name) ? $user->empore_staff->name : '';
@@ -153,8 +153,8 @@ class AuthController extends Controller {
         $params['company']  = get_setting('attendance_company', $user);
         $params['news']     = get_setting('attendance_news', $user);
         $params['job']      = '';
-        
-        if(!empty($item->empore_organisasi_staff_id))
+
+        if(!empty($user->empore_organisasi_staff_id))
         {
           $params['job'] = isset($user->empore_staff->name) ? $user->empore_staff->name : '';
         } 
@@ -219,8 +219,8 @@ class AuthController extends Controller {
         $params['company']  = get_setting('attendance_company', $user);
         $params['news']     = get_setting('attendance_news', $user);
         $params['job']      = '';
-        
-        if(!empty($item->empore_organisasi_staff_id))
+
+        if(!empty($user->empore_organisasi_staff_id))
         {
           $params['job'] = isset($user->empore_staff->name) ? $user->empore_staff->name : '';
         }
