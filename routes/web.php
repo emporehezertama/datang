@@ -13,17 +13,21 @@
 
 date_default_timezone_set('Asia/Jakarta');
 
-$router->get('/', function () use ($router) {
-    return [
-    	'Company' => 'PT Empore Heze Tama',
-    	'date' => date('Y-m-d H:i:s'),
-    	'Address' => 'Metropolitan tower, level13-A
-					Jl. R.A. Kartini - T.B. Simatupang Kav. 14
-					Cilandak, Jakarta Selatan
-					Jakarta - 12430'
+ $router->get('/', function () use ($router) {
+     return [
+     	'Company' => 'PT Empore Heze Tama',
+     	'date' => date('Y-m-d H:i:s'),
+     	'Address' => 'Metropolitan tower, level13-A
+ 					Jl. R.A. Kartini - T.B. Simatupang Kav. 14
+ 					Cilandak, Jakarta Selatan
+ 					Jakarta - 12430'
 
-    ];
-});
+     ];
+ });
+
+
+// $router->get('/', 'AttendanceController@test');
+
 
 $router->post('set-modul-hris', 'CrmController@insertModule');
 $router->post('set-user-hris', 'CrmController@insertUser');
