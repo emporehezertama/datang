@@ -25,7 +25,7 @@ class UsersDemoEmp extends Model
      */
     public function empore_staff()
     {
-        return $this->hasOne('App\Models\EmporeOrganisasiStaff', 'id', 'empore_organisasi_staff_id');
+        return $this->hasOne('App\Models\EmporeOrganisasiStaffDemo', 'id', 'empore_organisasi_staff_id');
     }
 
     /**
@@ -34,7 +34,7 @@ class UsersDemoEmp extends Model
      */
     public function empore_manager()
     {
-        return $this->hasOne('App\Models\EmporeOrganisasiManager', 'id', 'empore_organisasi_manager_id');
+        return $this->hasOne('App\Models\EmporeOrganisasiManagerDemo', 'id', 'empore_organisasi_manager_id');
     }
 
     /**
@@ -43,6 +43,6 @@ class UsersDemoEmp extends Model
      */
     public function empore_direktur()
     {
-        return $this->hasOne('App\Models\EmporeOrganisasiDirektur', 'id', 'empore_organisasi_direktur');
+        return $this->hasOne('App\Models\EmporeOrganisasiDirekturDemo', 'id', 'empore_organisasi_direktur');
     }
 }
