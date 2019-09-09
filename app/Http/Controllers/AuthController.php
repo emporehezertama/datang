@@ -87,13 +87,14 @@ class AuthController extends Controller {
         $params['news']     = get_setting('attendance_news', $user);
         $params['job']      = '';
 
-        if(!empty($item->empore_organisasi_staff_id))
+        if(isset($item->structure->position))
         {
-          $params['job'] = isset($user->empore_staff->name) ? $user->empore_staff->name : '';
+          $params['job'] .= $item->structure->position->name;
         }
-        if(empty($user->empore_organisasi_staff_id) and !empty($user->empore_organisasi_manager_id))
+
+        if(isset($item->structure->division))
         {
-          $params['job'] .= isset($user->empore_manager->name) ? ' / '. $user->empore_manager->name : '';
+          $params['job'] .= $item->structure->division;
         }
 
         $check = AbsensiItem::where('user_id', $user->id)->whereDate('date', date('Y-m-d'))->first();
@@ -154,13 +155,14 @@ class AuthController extends Controller {
         $params['news']     = get_setting('attendance_news', $user);
         $params['job']      = '';
 
-        if(!empty($user->empore_organisasi_staff_id))
+        if(isset($item->structure->position))
         {
-          $params['job'] = isset($user->empore_staff->name) ? $user->empore_staff->name : '';
-        } 
-        if(empty($user->empore_organisasi_staff_id) and !empty($user->empore_organisasi_manager_id))
+          $params['job'] .= $item->structure->position->name;
+        }
+
+        if(isset($item->structure->division))
         {
-          $params['job'] .= isset($user->empore_manager->name) ? ' / '. $user->empore_manager->name : '';
+          $params['job'] .= $item->structure->division;
         }
 
         $check = AbsensiItemMobile::where('user_id', $user->id)->whereDate('date', date('Y-m-d'))->first();
@@ -220,14 +222,14 @@ class AuthController extends Controller {
         $params['news']     = get_setting('attendance_news', $user);
         $params['job']      = '';
 
-        if(!empty($user->empore_organisasi_staff_id))
+        if(isset($item->structure->position))
         {
-          $params['job'] = isset($user->empore_staff->name) ? $user->empore_staff->name : '';
+          $params['job'] .= $item->structure->position->name;
         }
-              
-        if(empty($user->empore_organisasi_staff_id) and !empty($user->empore_organisasi_manager_id))
+
+        if(isset($item->structure->division))
         {
-          $params['job'] .= isset($user->empore_manager->name) ? ' / '. $user->empore_manager->name : '';
+          $params['job'] .= $item->structure->division;
         }
 
         $check = AbsensiItemMhr::where('user_id', $user->id)->whereDate('date', date('Y-m-d'))->first();
