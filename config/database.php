@@ -78,7 +78,8 @@ return [
         'mysqlCrm' => [
             'driver'    => 'mysql',
             'host'      => env('DB_HOST_CRM', 'localhost'),
-            'database'  => env('DB_DATABASE_CRM', 'crm'),
+        //    'database'  => env('DB_DATABASE_CRM', 'crm'),
+            'database'  => env('DB_DATABASE_CRM', 'empore_platform'),
             'username'  => env('DB_USERNAME_CRM', 'root'),
             'password'  => env('DB_PASSWORD_CRM', ''),
             //'charset'   => 'utf8',

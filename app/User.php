@@ -29,4 +29,31 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $hidden = [
         'password',
     ];
+
+    /**
+     * Absensi Setting
+     * @return void
+     */
+    public function absensiSetting()
+    {
+        return $this->hasOne('App\Models\AbsensiSetting', 'id', 'absensi_setting_id');
+    }
+
+    /**
+     * [empore_staff description]
+     * @return [type] [description]
+     */
+    public function empore_staff()
+    {
+        return $this->hasOne('App\Models\EmporeOrganisasiStaff', 'id', 'empore_organisasi_staff_id');
+    }
+
+    /**
+     * [empore_staff description]
+     * @return [type] [description]
+     */
+    public function empore_manager()
+    {
+        return $this->hasOne('App\Models\EmporeOrganisasiManager', 'id', 'empore_organisasi_manager_id');
+    }
 }

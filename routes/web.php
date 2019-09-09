@@ -11,16 +11,19 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return [
-    	'Company' => 'PT Empore Heze Tama',
-    	'Address' => 'Metropolitan tower, level13-A
-					Jl. R.A. Kartini - T.B. Simatupang Kav. 14
-					Cilandak, Jakarta Selatan
-					Jakarta - 12430'
+date_default_timezone_set('Asia/Jakarta');
 
-    ];
-});
+ $router->get('/', function () use ($router) {
+     return [
+     	'Company' => 'PT Empore Heze Tama',
+     	'date' => date('Y-m-d H:i:s'),
+     	'Address' => 'Metropolitan tower, level13-A
+ 					Jl. R.A. Kartini - T.B. Simatupang Kav. 14
+ 					Cilandak, Jakarta Selatan
+ 					Jakarta - 12430'
+
+     ];
+ });
 
 $router->post('set-modul-hris', 'CrmController@insertModule');
 $router->post('set-user-hris', 'CrmController@insertUser');
@@ -34,3 +37,8 @@ $router->post('send-attendance', 'AttendanceController@send');
 $router->post('finger-store', 'AttendanceController@fingerStore');
 $router->post('attendance-check-auth', 'AttendanceController@attendanceCheckAuth');
 $router->post('login-attendance', 'AuthController@verifyAttendance');
+
+// Production
+$router->post('send-attendance-mhr', 'AttendanceController@sendMhr');
+$router->post('attendance-check-auth-mhr', 'AttendanceController@attendanceCheckAuthMhr');
+$router->post('login-attendance-mhr', 'AuthController@verifyAttendanceMhr');

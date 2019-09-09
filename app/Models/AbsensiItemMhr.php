@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class AbsensiItemMobile extends Model
+class AbsensiItemMhr extends Model
 {
-    protected $connection = 'mysqlDemoEmp';
+	 protected $connection = 'mysqlMhr';
 	
     protected $table = 'absensi_item';
 
