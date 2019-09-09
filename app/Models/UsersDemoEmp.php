@@ -20,29 +20,11 @@ class UsersDemoEmp extends Model
     }
 
     /**
-     * [empore_staff description]
-     * @return [type] [description]
+     * Get Structure
+     * @return object
      */
-    public function empore_staff()
+    public function structure()
     {
-        return $this->hasOne('App\Models\EmporeOrganisasiStaffDemo', 'id', 'empore_organisasi_staff_id');
-    }
-
-    /**
-     * [empore_staff description]
-     * @return [type] [description]
-     */
-    public function empore_manager()
-    {
-        return $this->hasOne('App\Models\EmporeOrganisasiManagerDemo', 'id', 'empore_organisasi_manager_id');
-    }
-
-    /**
-     * [empore_staff description]
-     * @return [type] [description]
-     */
-    public function empore_direktur()
-    {
-        return $this->hasOne('App\Models\EmporeOrganisasiDirekturDemo', 'id', 'empore_organisasi_direktur');
+        return $this->hasOne('\App\Models\StructureOrganizationCustom', 'id', 'structure_organization_custom_id');
     }
 }
