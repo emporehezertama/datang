@@ -8,6 +8,8 @@ class EmporeOrganisasiStaff extends Model
 {
     protected $table = 'empore_organisasi_staff';
 
+   	protected $connection = 'mysqlMhr';
+
     /**
      * [manager description]
      * @return [type] [description]
