@@ -86,6 +86,7 @@ class AuthController extends Controller {
         $params['company']  = get_setting('attendance_company', $user);
         $params['news']     = get_setting('attendance_news', $user);
         $params['job']      = '';
+        $params['date']      = date('d F Y');
 
         if(isset($user->structure->position->name))
         {
@@ -154,6 +155,7 @@ class AuthController extends Controller {
         $params['company']  = get_setting('attendance_company', $user);
         $params['news']     = get_setting('attendance_news', $user);
         $params['job']      = '';
+        $params['date']      = date('d F Y');
 
         if(isset($user->structure->position->name))
         {
@@ -221,6 +223,7 @@ class AuthController extends Controller {
         $params['company']  = get_setting('attendance_company', $user);
         $params['news']     = get_setting('attendance_news', $user);
         $params['job']      = '';
+        $params['date']      = date('d F Y');
 
         if(isset($user->structure->position->name))
         {
