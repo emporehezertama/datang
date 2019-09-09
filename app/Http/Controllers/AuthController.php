@@ -87,14 +87,14 @@ class AuthController extends Controller {
         $params['news']     = get_setting('attendance_news', $user);
         $params['job']      = '';
 
-        if(isset($item->structure->position))
+        if(isset($user->structure->position))
         {
-          $params['job'] .= $item->structure->position->name;
+          $params['job'] .= $user->structure->position->name;
         }
 
-        if(isset($item->structure->division))
+        if(isset($user->structure->division))
         {
-          $params['job'] .= $item->structure->division;
+          $params['job'] .= $user->structure->division;
         }
 
         $check = AbsensiItem::where('user_id', $user->id)->whereDate('date', date('Y-m-d'))->first();
@@ -155,14 +155,14 @@ class AuthController extends Controller {
         $params['news']     = get_setting('attendance_news', $user);
         $params['job']      = '';
 
-        if(isset($item->structure->position))
+        if(isset($user->structure->position))
         {
-          $params['job'] .= $item->structure->position->name;
+          $params['job'] .= $user->structure->position->name;
         }
 
-        if(isset($item->structure->division))
+        if(isset($user->structure->division))
         {
-          $params['job'] .= $item->structure->division;
+          $params['job'] .= $user->structure->division;
         }
 
         $check = AbsensiItemMobile::where('user_id', $user->id)->whereDate('date', date('Y-m-d'))->first();
@@ -222,14 +222,14 @@ class AuthController extends Controller {
         $params['news']     = get_setting('attendance_news', $user);
         $params['job']      = '';
 
-        if(isset($item->structure->position))
+        if(isset($user->structure->position))
         {
-          $params['job'] .= $item->structure->position->name;
+          $params['job'] .= $user->structure->position->name;
         }
 
-        if(isset($item->structure->division))
+        if(isset($user->structure->division))
         {
-          $params['job'] .= $item->structure->division;
+          $params['job'] .= $user->structure->division;
         }
 
         $check = AbsensiItemMhr::where('user_id', $user->id)->whereDate('date', date('Y-m-d'))->first();
