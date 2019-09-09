@@ -92,10 +92,10 @@ class AuthController extends Controller {
           $params['job'] .= $user->structure->position->name;
         }
 
-        if(isset($user->structure->division))
-        {
-          $params['job'] .= ' '. $user->structure->division;
-        }
+        // if(isset($user->structure->division))
+        // {
+        //   $params['job'] .= ' '. $user->structure->division;
+        // }
 
         $check = AbsensiItem::where('user_id', $user->id)->whereDate('date', date('Y-m-d'))->first();
         if($check)
@@ -160,10 +160,10 @@ class AuthController extends Controller {
           $params['job'] .= $user->structure->position->name;
         }
 
-        if(isset($user->structure->division))
-        {
-          $params['job'] .= ' '. $user->structure->division;
-        }
+        // if(isset($user->structure->division))
+        // {
+        //   $params['job'] .= ' '. $user->structure->division;
+        // }
 
         $check = AbsensiItemMobile::where('user_id', $user->id)->whereDate('date', date('Y-m-d'))->first();
         if($check)
@@ -227,10 +227,10 @@ class AuthController extends Controller {
           $params['job'] .= $user->structure->position->name;
         }
 
-        if(isset($user->structure->division->name))
-        {
-          $params['job'] .= ' '. $user->structure->division->name;
-        }
+        // if(isset($user->structure->division->name))
+        // {
+        //   $params['job'] .= ' '. $user->structure->division->name;
+        // }
 
         $check = AbsensiItemMhr::where('user_id', $user->id)->whereDate('date', date('Y-m-d'))->first();
         if($check)
