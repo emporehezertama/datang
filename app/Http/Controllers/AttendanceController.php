@@ -86,20 +86,43 @@ class AttendanceController extends Controller
         /**
          * Insert to em-apps.com
          */
-        $user = \App\User::where('absensi_number', $request->absensi_number)->first();
+        if($request->sn == 'A3AG184660639') // Punya Empore
+        {
+            $user = \App\User::where('absensi_number', $request->absensi_number)->first();
+        }
+        else
+        {
+            $user = \App\UserMhr::where('absensi_number', $request->absensi_number)->first();
+        }
         
         if($user)
         {
-            $item               = AbsensiItem::where('user_id', $user->id)->whereDate('date', date('Y-m-d', strtotime($request->checktime)))->first();
+            if($request->sn == 'A3AG184660639') // Punya Empore
+            {
+                $item               = AbsensiItem::where('user_id', $user->id)->whereDate('date', date('Y-m-d', strtotime($request->checktime)))->first();
+            }
+            else
+            {
+                $item               = AbsensiItemMhr::where('user_id', $user->id)->whereDate('date', date('Y-m-d', strtotime($request->checktime)))->first();
+            }
 
             if(!$item)
             {
-                $item = new AbsensiItem();                
+                if($request->sn == 'A3AG184660639') // Punya Empore
+                {
+                    $item = new AbsensiItem();                
+                }
+                else
+                {
+                    $item = new AbsensiItemMhr();                
+                }
+
                 // inject attendance
                 $item->user_id      = $user->id;
                 $item->date         = date('Y-m-d', strtotime($request->checktime));
                 $item->absensi_device_id = 11; 
                 $item->timetable    = date('l', strtotime($request->checktime));   
+                $item->ac_no        = $request->sn;
             }
             
             if($request->checktype == 1)
