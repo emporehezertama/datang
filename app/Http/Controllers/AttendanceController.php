@@ -92,7 +92,8 @@ class AttendanceController extends Controller
         }
         else
         {
-            $user = \App\UserMhr::where('absensi_number', $request->absensi_number)->first();
+            //$user = \App\UserMhr::where('absensi_number', $request->absensi_number)->first();
+            $user = \App\User::where('absensi_number', $request->absensi_number)->first();
         }
         
         if($user)
@@ -103,7 +104,9 @@ class AttendanceController extends Controller
             }
             else
             {
-                $item               = AbsensiItemMhr::where('user_id', $user->id)->whereDate('date', date('Y-m-d', strtotime($request->checktime)))->first();
+                $item               = AbsensiItem::where('user_id', $user->id)->whereDate('date', date('Y-m-d', strtotime($request->checktime)))->first();
+                //$item               = AbsensiItemMhr::where('user_id', $user->id)->whereDate('date', date('Y-m-d', strtotime($request->checktime)))->first();
+                
             }
 
             if(!$item)
@@ -114,7 +117,8 @@ class AttendanceController extends Controller
                 }
                 else
                 {
-                    $item = new AbsensiItemMhr();                
+                    //$item = new AbsensiItemMhr();    
+                    $item = new AbsensiItem();               
                 }
 
                 // inject attendance
