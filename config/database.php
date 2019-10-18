@@ -55,7 +55,7 @@ return [
         'mysql' => [
             'driver'    => 'mysql',
             'host'      => env('DB_HOST', 'localhost'),
-            'database'  => env('DB_DATABASE', 'hris'),
+            'database'  => env('DB_DATABASE', 'datang'),
             'username'  => env('DB_USERNAME', 'root'),
             'password'  => env('DB_PASSWORD', ''),
             //'charset'   => 'utf8',
@@ -75,60 +75,60 @@ return [
             
         ],
 
-        'mysqlCrm' => [
-            'driver'    => 'mysql',
-            'host'      => env('DB_HOST_CRM', 'localhost'),
-        //    'database'  => env('DB_DATABASE_CRM', 'crm'),
-            'database'  => env('DB_DATABASE_CRM', 'empore_platform'),
-            'username'  => env('DB_USERNAME_CRM', 'root'),
-            'password'  => env('DB_PASSWORD_CRM', ''),
-            //'charset'   => 'utf8',
-            //'collation' => 'utf8_unicode_ci',
+        // 'mysqlCrm' => [
+        //     'driver'    => 'mysql',
+        //     'host'      => env('DB_HOST_CRM', 'localhost'),
+        // //    'database'  => env('DB_DATABASE_CRM', 'crm'),
+        //     'database'  => env('DB_DATABASE_CRM', 'empore_platform'),
+        //     'username'  => env('DB_USERNAME_CRM', 'root'),
+        //     'password'  => env('DB_PASSWORD_CRM', ''),
+        //     //'charset'   => 'utf8',
+        //     //'collation' => 'utf8_unicode_ci',
             
-            'charset' => 'utf8',  
-            'collation' => 'utf8_unicode_ci',
-            //'port'      => '83306',
-            'prefix'    => '',
-            'strict'    => false,
+        //     'charset' => 'utf8',  
+        //     'collation' => 'utf8_unicode_ci',
+        //     //'port'      => '83306',
+        //     'prefix'    => '',
+        //     'strict'    => false,
             
-            //'options'   => array(
-            //    PDO::ATTR_PERSISTENT => true,
-            //),
+        //     //'options'   => array(
+        //     //    PDO::ATTR_PERSISTENT => true,
+        //     //),
             
-        ],
+        // ],
 
-        'mysqlMhr' => [
-            'driver'    => 'mysql',
-            'host'      => env('DB_HOST_MHR', 'localhost'),
-            'database'  => env('DB_DATABASE_MHR', 'hris'),
-            'username'  => env('DB_USERNAME_MHR', 'root'),
-            'password'  => env('DB_PASSWORD_MHR', ''),
-            //'charset'   => 'utf8',
-            //'collation' => 'utf8_unicode_ci',
+        // 'mysqlMhr' => [
+        //     'driver'    => 'mysql',
+        //     'host'      => env('DB_HOST_MHR', 'localhost'),
+        //     'database'  => env('DB_DATABASE_MHR', 'hris'),
+        //     'username'  => env('DB_USERNAME_MHR', 'root'),
+        //     'password'  => env('DB_PASSWORD_MHR', ''),
+        //     //'charset'   => 'utf8',
+        //     //'collation' => 'utf8_unicode_ci',
             
-            'charset' => 'utf8',  
-            'collation' => 'utf8_unicode_ci',
-            //'port'      => '83306',
-            'prefix'    => '',
-            'strict'    => false,
+        //     'charset' => 'utf8',  
+        //     'collation' => 'utf8_unicode_ci',
+        //     //'port'      => '83306',
+        //     'prefix'    => '',
+        //     'strict'    => false,
             
-            //'options'   => array(
-            //    PDO::ATTR_PERSISTENT => true,
-            //),
+        //     //'options'   => array(
+        //     //    PDO::ATTR_PERSISTENT => true,
+        //     //),
             
-        ],
+        // ],
 
-        'mysqlDemoEmp' => [
-            'driver'    => 'mysql',
-            'host'      => env('DB_HOST_DEMOEMP', 'localhost'),
-            'database'  => env('DB_DATABASE_DEMOEMP', 'hris'),
-            'username'  => env('DB_USERNAME_DEMOEMP', 'root'),
-            'password'  => env('DB_PASSWORD_DEMOEMP', ''),
-            'charset' => 'utf8',  
-            'collation' => 'utf8_unicode_ci',
-            'prefix'    => '',
-            'strict'    => false,
-        ],
+        // 'mysqlDemoEmp' => [
+        //     'driver'    => 'mysql',
+        //     'host'      => env('DB_HOST_DEMOEMP', 'localhost'),
+        //     'database'  => env('DB_DATABASE_DEMOEMP', 'hris'),
+        //     'username'  => env('DB_USERNAME_DEMOEMP', 'root'),
+        //     'password'  => env('DB_PASSWORD_DEMOEMP', ''),
+        //     'charset' => 'utf8',  
+        //     'collation' => 'utf8_unicode_ci',
+        //     'prefix'    => '',
+        //     'strict'    => false,
+        // ],
 
         'pgsql' => [
             'driver'   => 'pgsql',
